@@ -37,6 +37,18 @@ translateBtn.style.cursor = 'pointer';
 translateBtn.style.boxShadow = 'var(--box-shadow)';
 document.body.appendChild(translateBtn);
 
+// subject names
+const subjectNames = {
+    "Adab": {
+        en: "Literature",
+        ar: "الأدب"
+    },
+    "Feeziya 1": {
+        en: "Physics",
+        ar: "الفيزياء"
+    }
+};
+
 // State
 let currentSubject = null;
 let currentTopicIndex = null;
@@ -117,9 +129,9 @@ function renderSubjectTabs() {
 }
 
 // Helper functions for translation
-function getDisplaySubjectName(subject) {
+/*function getDisplaySubjectName(subject) {
     return isTranslated ? (translation[subject] ? Object.keys(translation).find(key => key === subject) : subject) : subject;
-}
+}*/
 
 function getDisplayTopicName(subject, index) {
     if (isTranslated && translation[subject] && translation[subject][index]) {
@@ -139,6 +151,8 @@ function loadFirstSubject() {
 // Load a subject
 function loadSubject(subject) {
     currentSubject = subject;
+
+    subjectTitle.textContent = getDisplaySubjectName(subject);
     
     // Update active subject tab
     document.querySelectorAll('.subject-tab').forEach(tab => {
@@ -212,12 +226,16 @@ function loadTopic(subject, topicIndex) {
     contentText.classList.add('fade-in');
     setTimeout(() => contentText.classList.remove('fade-in'), 500);
     
+    subjectTitle.textContent = getDisplaySubjectName(subject);
+    currentSubject = subject;
+
     // Update mobile tabs
     updateMobileTabs(subject, topicIndex);
 }
 
 // Toggle between original and translated content
 function toggleTranslation() {
+    console.log(currentSubject)
     isTranslated = !isTranslated;
     
     // Update button text
@@ -400,6 +418,13 @@ function setupEventListeners() {
         checklistPanel.classList.remove('active');
         overlay.classList.remove('active');
     });
+}
+
+
+function getDisplaySubjectName(subject) {
+    return subjectNames[subject] 
+        ? (isTranslated ? subjectNames[subject].en : subjectNames[subject].ar)
+        : subject;
 }
 
 // Initialize the app when DOM is loaded
