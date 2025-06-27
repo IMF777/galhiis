@@ -1,16 +1,66 @@
 <!DOCTYPE html>
-<html lang="ar" translate="no">
+<html lang="ar" dir="rtl" translate="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google" content="notranslate">
-    <title>Filaavalhus</title>
+    <meta name="google" content="notranslate"></meta>
+    <title>مرجع الأدب المدرسي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="nav"></div>
-    <div class="app" dir="rtl"></div>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-book-open"></i>
+                    <span>مرجع الأدب المدرسي</span>
+                </div>
+                <button class="checklist-btn" id="checklistToggle">
+                    <i class="fas fa-tasks"></i>
+                    <span>قائمة التقدم</span>
+                </button>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="mobile-tabs" id="mobileTabs"></div>
+
+        <main>
+            <div class="sidebar" id="sidebar">
+                <div class="subject-tabs" id="subjectTabs"></div>
+            </div>
+
+            <div class="content-area" id="contentArea">
+                <div class="content-header">
+                    <h1 class="subject-title" id="subjectTitle"></h1>
+                </div>
+                <h2 class="topic-title" id="topicTitle"></h2>
+                <div class="content-text" id="contentText"></div>
+            </div>
+        </main>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="checklist-panel" id="checklistPanel">
+        <div class="checklist-header">
+            <h2 class="checklist-title">قائمة التقدم الدراسي</h2>
+            <button class="close-checklist" id="closeChecklist">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">0% مكتمل</div>
+        </div>
+        <div id="checklistContent"></div>
+    </div>
     <script src="data.js"></script>
-    <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

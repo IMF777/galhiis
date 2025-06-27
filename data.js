@@ -1,5 +1,4 @@
-const data = 
-[
+const Adab = [
     {
       topic: "عوامل النهضة الأدبية الحديثة",
       content: [
@@ -222,10 +221,173 @@ const data =
       ]
     }
   ]
-  
 
-const translation = 
-[
+
+const Feeziya1 = [
+  {
+    "topic": "التأثير المغناطيسي للتيار الكهربي",
+    "content": [
+      {
+        "question": "المجال المغناطيسي حول موصل",
+        "answer": "عند مرور التيار الكهربي في موصل يتولد حوله مجال مغناطيسي يجعل الموصل يعمل كمغناطيس."
+      },
+      {
+        "question": "كثافة الفيض المغناطيسي",
+        "answer": "هي عدد خطوط الفيض المغناطيسي المار عموديًا بوحدة المساحات."
+      },
+      {
+        "question": "وحدات قياس كثافة الفيض المغناطيسي",
+        "answer": "تسلا (T)، وبر/م² (Weber/m²)، فولت.ثانية/م² (V·s/m²)، نيوتن/أمبير.متر (N/A·m)"
+      }
+    ]
+  },
+  {
+    "topic": "السلك المستقيم",
+    "content": [
+      {
+        "question": "شكل المجال المغناطيسي",
+        "answer": "المجال حول السلك المستقيم يكون على شكل دوائر متحدة المركز مركزها السلك."
+      },
+      {
+        "question": "قانون أمبير الدائري",
+        "answer": "كثافة الفيض المغناطيسي الناتجة من السلك المستقيم تُحسب من العلاقة (قانون أمبير الدائري)."
+      },
+      {
+        "question": "العوامل المؤثرة على كثافة الفيض",
+        "answer": "شدة التيار الكهربائي (B ∝ I)، بعد النقطة عن السلك (B ∝ 1/d)، نوع الوسط المحيط."
+      },
+      {
+        "question": "تعيين اتجاه المجال المغناطيسي",
+        "answer": "قاعدة اليد اليمنى لأمبير، قاعدة البريمة اليمنى لماكسويل، إبرة مغناطيسية."
+      }
+    ]
+  },
+  {
+    "topic": "نقطة التعادل",
+    "content": [
+      {
+        "question": "تعريف نقطة التعادل",
+        "answer": "هي النقطة التي تنعدم عندها محصلة كثافة الفيض المغناطيسي أو ينعدم عندها انحراف الإبرة المغناطيسية."
+      },
+      {
+        "question": "شروط نقطة التعادل",
+        "answer": "المجالان في اتجاهين متضادين، المجالان متساويان في الكثافة."
+      },
+      {
+        "question": "موقع نقطة التعادل",
+        "answer": "تقع دائمًا أقرب للسلك الذي يمر به أقل شدة تيار. إذا كان التياران في نفس الاتجاه → تكون بين السلكين. إذا كانا في اتجاهين مختلفين → تكون خارج السلكين."
+      }
+    ]
+  },
+  {
+    "topic": "الملف الدائري",
+    "content": [
+      {
+        "question": "تعريف الملف الدائري",
+        "answer": "سلك مستقيم تم ثنيه على شكل دائرة."
+      },
+      {
+        "question": "قانون كثافة الفيض المغناطيسي عند المركز",
+        "answer": "B = μ₀IN / (2r) حيث: B كثافة الفيض، I شدة التيار، N عدد اللفات، r نصف قطر الملف، μ₀ النفاذية المغناطيسية للوسط."
+      },
+      {
+        "question": "العوامل المؤثرة على كثافة الفيض",
+        "answer": "شدة التيار (B ∝ I)، عدد اللفات (B ∝ N)، نصف القطر (B ∝ 1/r)، نوع الوسط المحيط."
+      },
+      {
+        "question": "تعيين اتجاه المجال المغناطيسي",
+        "answer": "قاعدة البريمة اليمنى لماكسويل، قاعدة قبضة اليد اليمنى لأمبير، بوصلة صغيرة، قاعدة عقارب الساعة (التيار مع عقارب الساعة → قطب جنوبي، عكسها → قطب شمالي)."
+      }
+    ]
+  },
+  {
+    "topic": "القوة المؤثرة على سلك يمر به تيار في مجال مغناطيسي",
+    "content": [
+      {
+        "question": "سبب الحركة",
+        "answer": "يتولد حول السلك مجال مغناطيسي دائري. في جانب يتحد المجالان (تزداد الكثافة)، وفي الجانب الآخر يتضادان (تقل الكثافة) → يتحرك السلك من المنطقة الأعلى كثافة إلى الأقل."
+      },
+      {
+        "question": "حساب القوة",
+        "answer": "F = B·I·L·sinθ حيث: F القوة، B كثافة الفيض، I شدة التيار، L طول السلك، θ الزاوية بين السلك والمجال."
+      },
+      {
+        "question": "العوامل المؤثرة على القوة",
+        "answer": "شدة التيار (F ∝ I)، كثافة الفيض (F ∝ B)، طول السلك (F ∝ L)، الزاوية θ (أكبر قوة عندما θ = 90°، تنعدم عندما θ = 0°)."
+      }
+    ]
+  },
+  {
+    "topic": "القوة المتبادلة بين سلكين مستقيمين",
+    "content": [
+      {
+        "question": "اتجاه القوة",
+        "answer": "تياران في نفس الاتجاه → تجاذب، تياران في اتجاهين متضادين → تنافر."
+      },
+      {
+        "question": "حساب القوة المتبادلة",
+        "answer": "F = μ₀I₁I₂L / (2πd) حيث: I₁, I₂ شدة التيارين، d المسافة بين السلكين، L طول السلك."
+      }
+    ]
+  },
+  {
+    "topic": "أجهزة القياس الكهربائية",
+    "content": [
+      {
+        "question": "الجلفانومتر",
+        "answer": "وظيفته: قياس شدة التيارات الضعيفة. فكرة العمل: مرور التيار في الملف → عزم ازدواج مغناطيسي → دوران الملف. معايرة: بتمرير تيار معلوم وقياس زاوية الانحراف."
+      },
+      {
+        "question": "الأميتر",
+        "answer": "وظيفته: قياس شدة التيار. يوصل على التوالي. تركيبه: جلفانومتر + مجزئ تيار (Rs). حساب Rs: IₛRₛ = I₉R₉."
+      },
+      {
+        "question": "الفولتميتر",
+        "answer": "وظيفته: قياس فرق الجهد. يوصل على التوازي. تركيبه: جلفانومتر + مضاعف جهد (Rm). حساب Rm: Rm = (V - V₉) / I₉."
+      },
+      {
+        "question": "الأوميتر",
+        "answer": "وظيفته: قياس مقاومة مجهولة. يعتمد على قياس النقص في شدة التيار عند توصيل المقاومة. المقاومة العيارية: مجموع المقاومات الداخلية عند أقصى انحراف."
+      }
+    ]
+  },
+  {
+    "topic": "ملاحظات عامة",
+    "content": [
+      {
+        "question": "خصائص المجال المغناطيسي",
+        "answer": "المجال حول سلك يمر به تيار يكون دائريًا. داخل ملف حلزوني يكون خطوطًا مستقيمة متوازية. تزداد كثافة خطوط الفيض مع الاقتراب من السلك."
+      },
+      {
+        "question": "تفاعل الأسلاك المتوازية",
+        "answer": "تياران في نفس الاتجاه → تجاذب، تياران متعاكسان → تنافر."
+      }
+    ]
+  }
+]
+
+
+
+
+
+
+
+
+
+
+const data = {Adab,"Feeziya Unit 1":Feeziya1};
+
+
+
+
+
+
+
+
+
+
+
+const tadab = [
     {
       topic: "Factors of the Modern Literary Renaissance",
       content: [
@@ -448,3 +610,162 @@ const translation =
       ]
     }
   ]
+
+
+
+
+
+const tfeeziya = [
+  {
+    "topic": "Magnetic Effect of Electric Current",
+    "content": [
+      {
+        "question": "Magnetic Field Around a Conductor",
+        "answer": "When electric current passes through a conductor, a magnetic field is generated around it, causing the conductor to act like a magnet."
+      },
+      {
+        "question": "Magnetic Flux Density",
+        "answer": "The number of magnetic flux lines passing perpendicularly per unit area."
+      },
+      {
+        "question": "Units of Magnetic Flux Density",
+        "answer": "Tesla (T), Weber/m² (Wb/m²), Volt·second/m² (V·s/m²), Newton/Ampere·meter (N/A·m)."
+      }
+    ]
+  },
+  {
+    "topic": "Straight Wire",
+    "content": [
+      {
+        "question": "Shape of Magnetic Field",
+        "answer": "The field around a straight wire forms concentric circles centered on the wire."
+      },
+      {
+        "question": "Ampère’s Circuital Law",
+        "answer": "Magnetic flux density due to a straight wire is calculated using Ampère’s circuital law."
+      },
+      {
+        "question": "Factors Affecting Flux Density",
+        "answer": "Current intensity (B ∝ I), distance from the wire (B ∝ 1/d), surrounding medium."
+      },
+      {
+        "question": "Determining Field Direction",
+        "answer": "Right-hand thumb rule (Ampère), Maxwell’s corkscrew rule, compass needle."
+      }
+    ]
+  },
+  {
+    "topic": "Neutral Point",
+    "content": [
+      {
+        "question": "Definition",
+        "answer": "The point where the resultant magnetic flux density is zero or where a compass needle shows no deflection."
+      },
+      {
+        "question": "Conditions",
+        "answer": "Fields must be in opposite directions and equal in magnitude."
+      },
+      {
+        "question": "Location",
+        "answer": "Always closer to the wire with weaker current. If currents are parallel → between wires; if antiparallel → outside wires."
+      }
+    ]
+  },
+  {
+    "topic": "Circular Coil",
+    "content": [
+      {
+        "question": "Definition",
+        "answer": "A straight wire bent into a circular loop."
+      },
+      {
+        "question": "Magnetic Flux Density at Center",
+        "answer": "B = μ₀IN / (2r) where: B = flux density, I = current, N = turns, r = coil radius, μ₀ = permeability of medium."
+      },
+      {
+        "question": "Factors Affecting Flux Density",
+        "answer": "Current (B ∝ I), number of turns (B ∝ N), radius (B ∝ 1/r), surrounding medium."
+      },
+      {
+        "question": "Determining Field Direction",
+        "answer": "Maxwell’s corkscrew rule, right-hand grip rule (Ampère), clock rule (current clockwise → south pole, anticlockwise → north pole)."
+      }
+    ]
+  },
+  {
+    "topic": "Force on a Current-Carrying Wire in a Magnetic Field",
+    "content": [
+      {
+        "question": "Cause of Motion",
+        "answer": "A circular magnetic field around the wire interacts with the external field. On one side, fields add (higher density); on the other, they oppose (lower density) → wire moves from high to low density."
+      },
+      {
+        "question": "Force Calculation",
+        "answer": "F = B·I·L·sinθ where: F = force, B = flux density, I = current, L = wire length, θ = angle between wire and field."
+      },
+      {
+        "question": "Influencing Factors",
+        "answer": "Current (F ∝ I), flux density (F ∝ B), wire length (F ∝ L), angle θ (max force at θ = 90°, zero at θ = 0°)."
+      }
+    ]
+  },
+  {
+    "topic": "Mutual Force Between Two Parallel Wires",
+    "content": [
+      {
+        "question": "Force Direction",
+        "answer": "Parallel currents → attraction, antiparallel currents → repulsion."
+      },
+      {
+        "question": "Force Calculation",
+        "answer": "F = μ₀I₁I₂L / (2πd) where: I₁, I₂ = currents, d = separation, L = wire length."
+      }
+    ]
+  },
+  {
+    "topic": "Electrical Measuring Instruments",
+    "content": [
+      {
+        "question": "Galvanometer",
+        "answer": "Function: Measures weak currents. Principle: Current in coil → magnetic torque → deflection. Calibration: Known current → measure deflection angle."
+      },
+      {
+        "question": "Ammeter",
+        "answer": "Function: Measures current. Connected in series. Design: Galvanometer + shunt resistor (Rs). Calculation: IₛRₛ = I₉R₉."
+      },
+      {
+        "question": "Voltmeter",
+        "answer": "Function: Measures voltage. Connected in parallel. Design: Galvanometer + multiplier resistor (Rm). Calculation: Rm = (V - V₉) / I₉."
+      },
+      {
+        "question": "Ohmmeter",
+        "answer": "Function: Measures unknown resistance. Principle: Current drop due to resistance. Standard resistance: Total internal resistance at full-scale deflection."
+      }
+    ]
+  },
+  {
+    "topic": "General Notes",
+    "content": [
+      {
+        "question": "Magnetic Field Properties",
+        "answer": "Field around a current-carrying wire is circular. Inside a solenoid: uniform parallel lines. Flux density increases near the wire."
+      },
+      {
+        "question": "Parallel Wires Interaction",
+        "answer": "Parallel currents → attraction, antiparallel currents → repulsion."
+      }
+    ]
+  }
+]
+
+
+
+
+
+
+
+
+
+
+
+const translation = {Adab:tadab,"Feeziya 2":tfeeziya}
