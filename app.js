@@ -1,3 +1,8 @@
+if (localStorage.getItem('msgshown') != 'true') {
+    alert('Version 1.0.1\n-Major patches\n-Code refactorization\n-Design update\n-Sidetabs updated\n-Mobile responsive\n');
+    localStorage.setItem('msgshown', 'true');
+}
+
 // DOM Elements
 const sidebar = document.getElementById('sidebar');
 const subjectTabs = document.getElementById('subjectTabs');
