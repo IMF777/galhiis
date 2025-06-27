@@ -15,7 +15,7 @@ const progressText = document.getElementById('progressText');
 const checklistContent = document.getElementById('checklistContent');
 const mobileTabs = document.getElementById('mobileTabs');
 
-// Translation Elements
+// Translation Button
 const translateBtn = document.createElement('button');
 translateBtn.className = 'translate-btn';
 translateBtn.innerHTML = '<i class="fas fa-language"></i> <span>English</span>';
@@ -35,7 +35,7 @@ document.body.appendChild(translateBtn);
 // State
 let currentSubject = null;
 let currentTopicIndex = null;
-let isTranslated = false; // Start in English mode
+let isTranslated = false;
 const completionStatus = JSON.parse(localStorage.getItem('completionStatus')) || {};
 
 // Initialize the app
@@ -45,45 +45,42 @@ function initApp() {
     setupEventListeners();
     updateProgress();
     
-    // Set initial translation state (remove the toggleTranslation call)
-    translateBtn.addEventListener('click', () => toggleTranslation());
+    translateBtn.addEventListener('click', toggleTranslation);
 }
 
-// Render subject tabs in the sidebar with collapsible topics
+// Render subject tabs in the sidebar
 function renderSubjectTabs() {
     subjectTabs.innerHTML = '';
     
     Object.keys(data).forEach(subject => {
-        // Create subject tab
         const subjectTab = document.createElement('div');
         subjectTab.className = 'subject-tab';
         
-        // Subject title with chevron
         const subjectHeader = document.createElement('div');
         subjectHeader.className = 'subject-header';
         subjectHeader.innerHTML = `
-            <span>${isTranslated ? getTranslatedSubjectName(subject) : subject}</span>
+            <span>${getDisplaySubjectName(subject)}</span>
             <i class="fas fa-chevron-down"></i>
         `;
         
-        // Topics container
         const topicContainer = document.createElement('div');
         topicContainer.className = 'topic-container';
-        topicContainer.style.display = 'none'; // Start collapsed
+        topicContainer.style.display = 'none';
         
-        // Add topics
-        data[subject].forEach((topic, index) => {
-            const topicTab = document.createElement('div');
-            topicTab.className = 'topic-tab';
-            topicTab.textContent = isTranslated ? getTranslatedTopicName(subject, index) : topic.topic;
-            topicTab.addEventListener('click', (e) => {
-                e.stopPropagation();
-                loadTopic(subject, index);
+        // Add topics if they exist
+        if (data[subject] && data[subject].length > 0) {
+            data[subject].forEach((topic, index) => {
+                const topicTab = document.createElement('div');
+                topicTab.className = 'topic-tab';
+                topicTab.textContent = getDisplayTopicName(subject, index);
+                topicTab.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    loadTopic(subject, index);
+                });
+                topicContainer.appendChild(topicTab);
             });
-            topicContainer.appendChild(topicTab);
-        });
+        }
         
-        // Toggle topic visibility
         subjectHeader.addEventListener('click', (e) => {
             e.stopPropagation();
             const wasActive = subjectTab.classList.contains('active');
@@ -93,7 +90,10 @@ function renderSubjectTabs() {
                 if (tab !== subjectTab) {
                     tab.classList.remove('active');
                     tab.querySelector('.topic-container').style.display = 'none';
-                    tab.querySelector('.fa-chevron-down').classList.remove('fa-chevron-up');
+                    const chevron = tab.querySelector('.fa-chevron-down');
+                    if (chevron) {
+                        chevron.classList.remove('fa-chevron-up');
+                    }
                 }
             });
             
@@ -111,14 +111,13 @@ function renderSubjectTabs() {
     });
 }
 
-// Get translated subject name
-function getTranslatedSubjectName(subject) {
-    return translation[subject] ? Object.keys(translation).find(key => key === subject) : subject;
+// Helper functions for translation
+function getDisplaySubjectName(subject) {
+    return isTranslated ? (translation[subject] ? Object.keys(translation).find(key => key === subject) : subject) : subject;
 }
 
-// Get translated topic name
-function getTranslatedTopicName(subject, index) {
-    if (translation[subject] && translation[subject][index]) {
+function getDisplayTopicName(subject, index) {
+    if (isTranslated && translation[subject] && translation[subject][index]) {
         return translation[subject][index].topic;
     }
     return data[subject][index].topic;
@@ -138,16 +137,14 @@ function loadSubject(subject) {
     
     // Update active subject tab
     document.querySelectorAll('.subject-tab').forEach(tab => {
-        const tabSubject = isTranslated ? 
-            getOriginalSubjectName(tab.querySelector('.subject-header span').textContent) :
-            tab.querySelector('.subject-header span').textContent;
-        tab.classList.toggle('active-tab', tabSubject === subject);
+        const tabSubject = tab.querySelector('.subject-header span').textContent;
+        tab.classList.toggle('active-tab', getOriginalSubjectName(tabSubject) === subject);
     });
     
     // Update content area
-    subjectTitle.textContent = isTranslated ? getTranslatedSubjectName(subject) : subject;
+    subjectTitle.textContent = getDisplaySubjectName(subject);
     
-    // Load the first topic of the subject
+    // Load the first topic of the subject if available
     if (data[subject] && data[subject].length > 0) {
         loadTopic(subject, 0);
     }
@@ -156,15 +153,21 @@ function loadSubject(subject) {
     updateMobileTabs(subject);
 }
 
-// Get original subject name from translated name
-function getOriginalSubjectName(translatedName) {
-    return Object.keys(data).find(key => key === translatedName) || translatedName;
+// Get original subject name from display name
+function getOriginalSubjectName(displayName) {
+    if (isTranslated) {
+        return Object.keys(data).find(key => {
+            return translation[key] ? Object.keys(translation).find(tKey => tKey === key) === displayName : key === displayName;
+        }) || displayName;
+    }
+    return displayName;
 }
 
 // Load a specific topic
 function loadTopic(subject, topicIndex) {
+    if (!data[subject] || !data[subject][topicIndex]) return;
+    
     const topic = data[subject][topicIndex];
-    const translatedTopic = translation[subject] ? translation[subject][topicIndex] : null;
     currentTopicIndex = topicIndex;
     const topicId = `${subject}-${topicIndex}`;
     
@@ -174,23 +177,22 @@ function loadTopic(subject, topicIndex) {
     });
     
     // Update content area
-    topicTitle.textContent = isTranslated ? 
-        (translatedTopic ? translatedTopic.topic : topic.topic) : 
-        topic.topic;
+    topicTitle.textContent = getDisplayTopicName(subject, topicIndex);
     
-    // Format the content
-    const currentContent = isTranslated ? 
-        (translatedTopic ? translatedTopic.content : topic.content) : 
+    // Get the appropriate content based on translation state
+    const currentContent = isTranslated && translation[subject] && translation[subject][topicIndex] ? 
+        translation[subject][topicIndex].content : 
         topic.content;
     
-    let formattedContent = formatContent(currentContent);
-    contentText.innerHTML = formattedContent || '<p>No content available for this topic.</p>';
+    contentText.innerHTML = formatContent(currentContent) || '<p>No content available for this topic.</p>';
     
     // Store original and translated content
     contentText.dataset.originalContent = formatContent(topic.content);
-    contentText.dataset.translatedContent = translatedTopic ? formatContent(translatedTopic.content) : formatContent(topic.content);
+    contentText.dataset.translatedContent = translation[subject] && translation[subject][topicIndex] ? 
+        formatContent(translation[subject][topicIndex].content) : 
+        formatContent(topic.content);
     
-    // Set content direction based on translation state
+    // Set content direction and alignment
     contentText.style.direction = isTranslated ? 'ltr' : 'rtl';
     contentText.style.textAlign = isTranslated ? 'left' : 'right';
     
@@ -210,65 +212,47 @@ function loadTopic(subject, topicIndex) {
 }
 
 // Toggle between original and translated content
-function toggleTranslation(shouldUpdate = true) {
+function toggleTranslation() {
     isTranslated = !isTranslated;
     
     // Update button text
     translateBtn.querySelector('span').textContent = isTranslated ? 'العربية' : 'English';
     
-    // Update all visible text elements
-    if (shouldUpdate) {
-        // Update subject tabs
-        document.querySelectorAll('.subject-header span').forEach(span => {
-            const subject = getOriginalSubjectName(span.textContent);
-            span.textContent = isTranslated ? getTranslatedSubjectName(subject) : subject;
-        });
-        
-        // Update topic tabs
-        document.querySelectorAll('.topic-tab').forEach((tab, index) => {
-            const subject = currentSubject;
-            tab.textContent = isTranslated ? 
-                getTranslatedTopicName(subject, index) : 
-                data[subject][index].topic;
-        });
-        
-        // Update content area
-        if (currentSubject !== null && currentTopicIndex !== null) {
-            loadTopic(currentSubject, currentTopicIndex);
-        }
-        
-        // Update checklist
-        renderChecklist();
+    // Re-render all UI elements with the correct language
+    renderSubjectTabs();
+    
+    // Reload current topic if one is selected
+    if (currentSubject !== null && currentTopicIndex !== null) {
+        loadTopic(currentSubject, currentTopicIndex);
     }
+    
+    // Update checklist
+    renderChecklist();
 }
 
 // Format content based on its structure
 function formatContent(content) {
-    let formattedContent = '';
+    if (!content) return '';
     
-    if (content) {
-        if (Array.isArray(content)) {
-            // Handle array of Q&A pairs
-            content.forEach(item => {
-                if (item.question && item.answer) {
-                    const qPrefix = isTranslated ? 'Q:' : 'س:';
-                    formattedContent += `
-                        <div class="question"><strong>${qPrefix}</strong> ${item.question}</div>
-                        <div class="answer">${item.answer}</div>
-                    `;
-                }
-            });
-        } else if (typeof content === 'object' && content.question && content.answer) {
-            // Handle single Q&A object
-            const qPrefix = isTranslated ? 'Q:' : 'س:';
-            formattedContent = `
-                <div class="question"><strong>${qPrefix}</strong> ${content.question}</div>
-                <div class="answer">${content.answer}</div>
-            `;
-        } else if (typeof content === 'string') {
-            // Handle raw HTML content
-            formattedContent = content;
-        }
+    let formattedContent = '';
+    const qPrefix = isTranslated ? 'Q:' : 'س:';
+    
+    if (Array.isArray(content)) {
+        content.forEach(item => {
+            if (item.question && item.answer) {
+                formattedContent += `
+                    <div class="question"><strong>${qPrefix}</strong> ${item.question}</div>
+                    <div class="answer">${item.answer}</div>
+                `;
+            }
+        });
+    } else if (typeof content === 'object' && content.question && content.answer) {
+        formattedContent = `
+            <div class="question"><strong>${qPrefix}</strong> ${content.question}</div>
+            <div class="answer">${content.answer}</div>
+        `;
+    } else if (typeof content === 'string') {
+        formattedContent = content;
     }
     
     return formattedContent;
@@ -283,10 +267,7 @@ function updateMobileTabs(subject, activeIndex = 0) {
     data[subject].forEach((topic, index) => {
         const tab = document.createElement('div');
         tab.className = `mobile-tab ${index === activeIndex ? 'active' : ''}`;
-        tab.textContent = isTranslated ? 
-            (translation[subject] && translation[subject][index] ? 
-                translation[subject][index].topic : topic.topic) : 
-            topic.topic;
+        tab.textContent = getDisplayTopicName(subject, index);
         tab.addEventListener('click', () => loadTopic(subject, index));
         mobileTabs.appendChild(tab);
     });
@@ -314,9 +295,11 @@ function updateProgress() {
 function getAllTopics() {
     let topics = [];
     Object.keys(data).forEach(subject => {
-        data[subject].forEach((_, index) => {
-            topics.push(`${subject}-${index}`);
-        });
+        if (data[subject]) {
+            data[subject].forEach((_, index) => {
+                topics.push(`${subject}-${index}`);
+            });
+        }
     });
     return topics;
 }
@@ -326,13 +309,15 @@ function renderChecklist() {
     checklistContent.innerHTML = '';
     
     Object.keys(data).forEach(subject => {
+        if (!data[subject]) return;
+        
         const subjectChecklist = document.createElement('div');
         subjectChecklist.className = 'subject-checklist active';
         
         const subjectTitle = document.createElement('div');
         subjectTitle.className = 'subject-checklist-title';
         subjectTitle.innerHTML = `
-            <span>${isTranslated ? getTranslatedSubjectName(subject) : subject}</span>
+            <span>${getDisplaySubjectName(subject)}</span>
             <i class="fas fa-chevron-down"></i>
         `;
         
@@ -363,10 +348,7 @@ function renderChecklist() {
             
             const label = document.createElement('label');
             label.htmlFor = `check-${topicId}`;
-            label.textContent = isTranslated ? 
-                (translation[subject] && translation[subject][index] ? 
-                    translation[subject][index].topic : topic.topic) : 
-                topic.topic;
+            label.textContent = getDisplayTopicName(subject, index);
             
             checklistItem.appendChild(checkbox);
             checklistItem.appendChild(label);
