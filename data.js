@@ -768,4 +768,4 @@ const tfeeziya = [
 
 
 
-const translation = {Adab:tadab,"Feeziya 2":tfeeziya}
+const translation = {Adab:tadab,"Feeziya 1":tfeeziya}
